@@ -1,0 +1,43 @@
+import re
+
+def assess_password_strength(password):
+    # Length check
+    length_ok = len(password) >= 8
+
+    # Uppercase check
+    uppercase_ok = any(c.isupper() for c in password)
+
+    # Lowercase check
+    lowercase_ok = any(c.islower() for c in password)
+
+    # Digit check
+    digit_ok = any(c.isdigit() for c in password)
+
+    # Special character check using regex
+    special_ok = bool(re.search(r'[!@#$%^&*()\-_=+{};:,<.>\\\'\"|`~\[\]]', password))
+
+    # Calculate overall strength score
+    strength_score = sum([length_ok, uppercase_ok, lowercase_ok, digit_ok, special_ok])
+
+    # Determine strength level based on score
+    if strength_score == 5:
+        return "Very Strong"
+    elif strength_score == 4:
+        return "Strong"
+    elif strength_score == 3:
+        return "Moderate"
+    elif strength_score == 2:
+        return "Weak"
+    else:
+        return "Very Weak"
+
+# Example usage:
+password1 = "Password123!"
+password2 = "weakpass"
+password3 = "ABCDabcd1234"
+password4 = "OnlyLetters"
+
+print(f"Password '{password1}' strength: {assess_password_strength(password1)}")
+print(f"Password '{password2}' strength: {assess_password_strength(password2)}")
+print(f"Password '{password3}' strength: {assess_password_strength(password3)}")
+print(f"Password '{password4}' strength: {assess_password_strength(password4)}")
